@@ -12,3 +12,4 @@ class DealsViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = DealSerializer
+    filterset_fields = ['category', 'store']
