@@ -3,7 +3,7 @@ from django.db import models
 
 class Deal(models.Model):
     """Deal model"""
-    product_id = models.CharField(max_length=50)
+    product_id = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=250)
     category = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
@@ -16,8 +16,3 @@ class Deal(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True, blank=True)
     day_added = models.DateField(auto_now=True, blank=True)
-
-    class Meta:
-        unique_together = ('product_id', 'day_added')
-
-# Create your models here.
