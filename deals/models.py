@@ -5,7 +5,7 @@ class Deal(models.Model):
     """Deal model"""
     product_id = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=250)
-    category = models.CharField(max_length=100, blank=True)
+    category = models.CharField(max_length=250, blank=True, default="unset")
     description = models.TextField(blank=True)
     store = models.CharField(max_length=250, blank=True)
     link = models.URLField()

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'deals',
     'rest_framework',
     'django_filters',
+    'rest_framework_csv',
 ]
 
 REST_FRAMEWORK = {
