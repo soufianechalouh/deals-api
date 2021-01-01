@@ -18,4 +18,4 @@ class DealsViewSet(viewsets.ModelViewSet):
 
 
 class AllDealsViewSet(DealsViewSet):
-    queryset = Deal.objects.exclude(category="unset")
+    queryset = Deal.objects.all()
