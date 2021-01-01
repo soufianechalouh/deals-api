@@ -9,7 +9,7 @@ from rest_framework_csv.renderers import CSVRenderer
 
 class DealsViewSet(viewsets.ModelViewSet):
     renderer_classes = (CSVRenderer,) + tuple(api_settings.DEFAULT_RENDERER_CLASSES)
-    queryset = Deal.objects.all()
+    queryset = Deal.objects.exclude(category="unset")
     permissions = [
         permissions.AllowAny
     ]
