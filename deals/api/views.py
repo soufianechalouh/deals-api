@@ -15,3 +15,7 @@ class DealsViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = DealSerializer
     filterset_fields = ['category', 'store']
+
+
+class AllDealsViewSet(DealsViewSet):
+    queryset = Deal.objects.exclude(category="unset")
