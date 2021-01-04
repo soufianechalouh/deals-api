@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from rest_framework import viewsets, permissions
 from rest_framework.settings import api_settings
 
@@ -19,3 +21,7 @@ class DealsViewSet(viewsets.ModelViewSet):
 
 class AllDealsViewSet(DealsViewSet):
     queryset = Deal.objects.all()
+
+
+class RecentDealsViewSet(DealsViewSet):
+    queryset = Deal.objects.filter(last_update__gt=(datetime.now() - timedelta(minutes=5)))
