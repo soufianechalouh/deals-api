@@ -24,4 +24,4 @@ class AllDealsViewSet(DealsViewSet):
 
 
 class RecentDealsViewSet(DealsViewSet):
-    queryset = Deal.objects.filter(last_update__gt=(datetime.now() - timedelta(minutes=5)))
+    queryset = Deal.objects.exclude(category="unset").filter(last_update__gt=(datetime.now() - timedelta(minutes=5)))
