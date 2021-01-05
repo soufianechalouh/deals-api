@@ -24,5 +24,5 @@ class AllDealsViewSet(DealsViewSet):
 
 
 class RecentDealsViewSet(DealsViewSet):
-    queryset = Deal.objects.exclude(thumbnail_url__isnull=True).exclude(thumbnail_url__isnull='')\
-        .exclude(category="unset").filter(last_update__gt=(datetime.now() - timedelta(minutes=5)))
+    def get_queryset(self):
+        return Deal.objects.exclude(category="unset").exclude(thumbnail_url__isnull=True).exclude(thumbnail_url='').filter(last_update__gt=(datetime.now() - timedelta(minutes=5)))
