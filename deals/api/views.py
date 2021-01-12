@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from rest_framework import viewsets, permissions
 from rest_framework.settings import api_settings
 
@@ -15,3 +17,12 @@ class DealsViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = DealSerializer
     filterset_fields = ['category', 'store']
+
+
+class AllDealsViewSet(DealsViewSet):
+    queryset = Deal.objects.all()
+
+
+class RecentDealsViewSet(DealsViewSet):
+    def get_queryset(self):
+        return Deal.objects.exclude(category="unset").exclude(thumbnail_url__isnull=True).exclude(thumbnail_url='').filter(last_update__gt=(datetime.now() - timedelta(minutes=5)))

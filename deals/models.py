@@ -15,4 +15,4 @@ class Deal(models.Model):
     coupon = models.CharField(max_length=20, null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True, blank=True)
-    day_added = models.DateField(auto_now=True, blank=True)
+    last_update = models.DateTimeField(auto_now=True, blank=True)
