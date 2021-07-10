@@ -16,6 +16,12 @@ class UserAdminConfig(UserAdmin):
         ("Permissions", {"fields": ("is_staff", "is_active")}),
         ("Personal", {"fields": ("about",)}),
     )
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": ("email", "user_name", "first_name", "password1", "password2", "is_active", "is_staff")
+        }),
+    )
 
 
 admin.site.register(User, UserAdminConfig)
