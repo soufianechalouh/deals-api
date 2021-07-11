@@ -42,6 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     about = models.TextField(gettext_lazy("about"), max_length=500, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
 
     objects = UserManager()
 
