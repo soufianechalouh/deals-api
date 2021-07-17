@@ -3,12 +3,14 @@ from django.contrib.sites.shortcuts import get_current_site
 
 # Create your views here.
 from django.urls import reverse
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
-from users.serializers import RegisterSerializer
+from users.serializers import RegisterSerializer, EmailVerificationSerializer
 from users.utils import Utils
 
 from django.conf import settings
@@ -41,6 +43,14 @@ class RegisterView(generics.GenericAPIView):
 
 
 class VerifyEmail(generics.GenericAPIView):
+    serializer_class = EmailVerificationSerializer
+
+    token_param_config = openapi.Parameter("token",
+                                           in_=openapi.IN_QUERY,
+                                           description="Email validation token",
+                                           type=openapi.TYPE_STRING)
+
+    @swagger_auto_schema(manual_parameters=[token_param_config])
     def get(self, request):
         token = request.GET.get("token")
         try:

@@ -19,3 +19,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+
+# Created for swagger ui
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(max_length=255)
+
+    class Meta:
+        model = User
+        fields = ["token"]
