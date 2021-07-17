@@ -45,7 +45,7 @@ class VerifyEmail(generics.GenericAPIView):
     def get(self, request):
         token = request.GET.get("token")
         try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256')
             user = User.objects.get(id=payload["user_id"])
 
             if not user.is_verified:
@@ -58,3 +58,5 @@ class VerifyEmail(generics.GenericAPIView):
             return Response({"error": "Activation link expired"}, status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError as e:
             return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"unexpected error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
