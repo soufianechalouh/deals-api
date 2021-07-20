@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserManager(BaseUserManager):
@@ -42,8 +43,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     about = models.TextField(gettext_lazy("about"), max_length=500, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["user_name", "first_name"]
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            "refresh": str(refresh),
+            "access ": str(refresh.access_token)
+        }
