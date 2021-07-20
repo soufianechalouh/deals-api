@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
-from users.serializers import RegisterSerializer, EmailVerificationSerializer
+from users.serializers import RegisterSerializer, EmailVerificationSerializer, LoginSerializer
 from users.utils import Utils
 
 from django.conf import settings
@@ -69,3 +69,12 @@ class VerifyEmail(generics.GenericAPIView):
             return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({"unexpected error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginAPIView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)

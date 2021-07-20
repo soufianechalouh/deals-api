@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserManager(BaseUserManager):
@@ -48,3 +49,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["user_name", "first_name"]
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            "refresh": str(refresh),
+            "access ": str(refresh.access_token)
+        }
