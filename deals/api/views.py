@@ -15,9 +15,7 @@ from deals.permissions import IsStaffOrReadOnly
 class DealsViewSet(viewsets.ModelViewSet):
     renderer_classes = (CSVRenderer,) + tuple(api_settings.DEFAULT_RENDERER_CLASSES)
     queryset = Deal.objects.exclude(category="unset")
-    permissions = [
-        permissions.AllowAny
-    ]
+    permission_classes = [IsAuthenticated & IsStaffOrReadOnly]
     serializer_class = DealSerializer
     filterset_fields = ['category', 'store']
 
@@ -28,6 +26,8 @@ class AllDealsViewSet(DealsViewSet):
 
 
 class RecentDealsViewSet(DealsViewSet):
+    permission_classes = [IsAuthenticated & IsStaffOrReadOnly]
+
     def get_queryset(self):
         return Deal.objects.exclude(category="unset")\
             .exclude(thumbnail_url__isnull=True)\
